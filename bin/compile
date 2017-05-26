@@ -1,39 +1,44 @@
-#!/bin/sh
+#!/bin/bash
 
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-indent() {
-  sed -u 's/^/       /'
-}
+BIN_DIR=$(cd $(dirname $0); pwd)
+source "$BIN_DIR/support/bash_functions.sh"
 
-INIT_SCRIPT="$BUILD_DIR/.profile.d/logstash.sh"
+echo "SHELL VERSION"
+echo $SHELL
 
-echo "-----> Found a Logstash file"
-if [ ! -s $1/Logstash ]; then
-  echo "Logstash was empty"
-  exit 1
+export_env_dir
+
+LOGSTASH_SOURCE_FILE=${BUILD_DIR}/.profile.d/logstash.sh
+LOGSTASH_RELATIVE_PATH=${LOGSTASH_DIR##*/}
+LOGSTASH_DIR=$BUILD_DIR/logstash-${LOGSTASH_VERSION}
+
+echo "------> Detected Logstash Version: $LOGSTASH_VERSION"
+if [[ $LOGSTASH_VERSION =~ ^5 ]]; then
+  DOWNLOAD_URL="https://artifacts.elastic.co/downloads/logstash/logstash-$LOGSTASH_VERSION.tar.gz"
 else
-  echo "Logstash is not empty, here are the contents" | indent
-  cat $1/Logstash
-fi | indent
+  DOWNLOAD_URL="https://download.elastic.co/logstash/logstash/logstash-$LOGSTASH_VERSION.tar.gz"
+fi
 
-# TODO: Need to detect if version is specified in Logstash and modify DOWNLOAD_URL accordingly
-DOWNLOAD_URL="https://download.elastic.co/logstash/logstash/logstash-5.4.0.tar.gz"
-
-echo "-----> Installing Logstash..."
-
+echo "Installing Logstash..." | indent
 mkdir $CACHE_DIR
-echo "downloading $DOWNLOAD_URL" | indent
-curl -sLO $DOWNLOAD_URL
+echo "Downloading $DOWNLOAD_URL" | indent
+wget $DOWNLOAD_URL
+mv logstash-$LOGSTASH_VERSION.tar.gz $CACHE_DIR
+cp $CACHE_DIR/logstash-$LOGSTASH_VERSION.tar.gz $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz
+tar -xzvf $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz >/dev/null
+mv logstash-$LOGSTASH_VERSION $BUILD_DIR/logstash-$LOGSTASH_VERSION
+rm $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz
 
-mv logstash-5.4.0.tar.gz $CACHE_DIR
+echo "------> Creating .profile.d directory"
+mkdir -p ${BUILD_DIR}/.profile.d
+echo "Made dir" | indent
 
-echo $BUILD_DIR
-tar -xzvf $CACHE_DIR/logstash-5.4.0.tar.gz $BUILD_DIR
-LOGSTASH_DIR=$BUILD_DIR/logstash-5.4.0
-
-echo "Exporting PATH" | indent
-echo $LOGSTASH_DIR
-export PATH="$PATH:'${LOGSTASH_DIR##*/}'/bin"
+echo "------> Making logstash source file"
+echo "PATH=\${PATH}:\${HOME}/$LOGSTASH_RELATIVE_PATH/bin" > $LOGSTASH_SOURCE_FILE
+cat <<'EOF' >> $LOGSTASH_SOURCE_FILE
+EOF
+echo "Created file successfully" | indent
