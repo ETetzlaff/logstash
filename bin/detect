@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Ensure valid logstash file to continue
+if [ -f $1/Logstash ]; then
+  echo "Logstash Framework"
+  exit 0
+else
+  exit 1
+fi
