@@ -30,8 +30,10 @@ curl -sLO $DOWNLOAD_URL
 
 mv logstash-5.4.0.tar.gz $CACHE_DIR
 
+echo $BUILD_DIR
 tar -xzvf $CACHE_DIR/logstash-5.4.0.tar.gz $BUILD_DIR
 LOGSTASH_DIR=$BUILD_DIR/logstash-5.4.0
 
 echo "Exporting PATH" | indent
-echo 'export PATH="$PATH:'${LOGSTASH_DIR##*/}'/bin"' > $INIT_SCRIPT
+echo $LOGSTASH_DIR
+export PATH="$PATH:'${LOGSTASH_DIR##*/}'/bin"
