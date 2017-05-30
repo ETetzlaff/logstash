@@ -26,12 +26,15 @@ fi
 echo "Installing Logstash..." | indent
 mkdir $CACHE_DIR
 echo "Downloading $DOWNLOAD_URL" | indent
-wget $DOWNLOAD_URL
+wget $DOWNLOAD_URL >/dev/null
 mv logstash-$LOGSTASH_VERSION.tar.gz $CACHE_DIR
 cp $CACHE_DIR/logstash-$LOGSTASH_VERSION.tar.gz $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz
 tar -xzvf $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz >/dev/null
 mv logstash-$LOGSTASH_VERSION $BUILD_DIR/logstash-$LOGSTASH_VERSION
 rm $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz
+echo "BUILD_DIR CONTENTS"
+ls $BUILD_DIR
+ls $LOGSTASH_DIR
 
 echo "------> Creating .profile.d directory"
 mkdir -p ${BUILD_DIR}/.profile.d
@@ -42,3 +45,4 @@ echo "PATH=\${PATH}:\${HOME}/$LOGSTASH_RELATIVE_PATH/bin" > $LOGSTASH_SOURCE_FIL
 cat <<'EOF' >> $LOGSTASH_SOURCE_FILE
 EOF
 echo "Created file successfully" | indent
+cat $LOGSTASH_SOURCE_FILE
