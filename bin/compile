@@ -13,7 +13,7 @@ echo $SHELL
 export_env_dir
 
 LOGSTASH_SOURCE_FILE=${BUILD_DIR}/.profile.d/logstash.sh
-LOGSTASH_RELATIVE_PATH=${LOGSTASH_DIR##*/}
+LOGSTASH_RELATIVE_PATH=${LOGSTASH_DIR##*}
 LOGSTASH_DIR=$BUILD_DIR/logstash-${LOGSTASH_VERSION}
 
 echo "------> Detected Logstash Version: $LOGSTASH_VERSION"
