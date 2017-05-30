@@ -7,9 +7,6 @@ ENV_DIR=$3
 BIN_DIR=$(cd $(dirname $0); pwd)
 source "$BIN_DIR/support/bash_functions.sh"
 
-echo "SHELL VERSION"
-echo $SHELL
-
 export_env_dir
 
 LOGSTASH_SOURCE_FILE=${BUILD_DIR}/.profile.d/logstash.sh
