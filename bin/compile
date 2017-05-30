@@ -13,8 +13,8 @@ echo $SHELL
 export_env_dir
 
 LOGSTASH_SOURCE_FILE=${BUILD_DIR}/.profile.d/logstash.sh
-LOGSTASH_RELATIVE_PATH=${LOGSTASH_DIR##*}
 LOGSTASH_DIR=$BUILD_DIR/logstash-${LOGSTASH_VERSION}
+LOGSTASH_RELATIVE_PATH=${LOGSTASH_DIR##*/}
 
 echo "------> Detected Logstash Version: $LOGSTASH_VERSION"
 if [[ $LOGSTASH_VERSION =~ ^5 ]]; then
