@@ -29,9 +29,8 @@ cp $CACHE_DIR/logstash-$LOGSTASH_VERSION.tar.gz $BUILD_DIR/logstash-$LOGSTASH_VE
 tar -xzvf $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz >/dev/null
 mv logstash-$LOGSTASH_VERSION $BUILD_DIR/logstash-$LOGSTASH_VERSION
 rm $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz
-echo "BUILD_DIR CONTENTS"
-ls $BUILD_DIR
-ls $LOGSTASH_DIR
+
+edit_config_values
 
 echo "------> Creating .profile.d directory"
 mkdir -p ${BUILD_DIR}/.profile.d

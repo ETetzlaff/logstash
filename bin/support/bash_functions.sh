@@ -13,3 +13,17 @@ export_env_dir() {
 indent() {
   sed -u 's/^/       /'
 }
+
+edit_config_values() {
+  edit_port_for_metrics
+}
+
+edit_port_for_metrics() {
+  echo "------> Checking for Logstash Metrics Port"
+  if [[ $LOGSTASH_METRICS_PORT =~ ^[0-9]*$ ]]; then
+    echo "Found valid port, setting metrics port to: $LOGSTASH_METRICS_PORT" | indent
+    echo "http.port: $LOGSTASH_METRICS_PORT" >> $LOGSTASH_DIR/config/logstash.yml
+  else
+    echo "Invalid format found" | indent
+  fi
+}
