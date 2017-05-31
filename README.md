@@ -10,3 +10,9 @@ This buildpack picks up settings through your application's environment variable
 * LOGSTASH_METRICS_PORT
 
    will default to 9600-9700
+
+#### Procfile Usage ####
+This buildpack ensures logstash is on the application's PATH, so using it is as simple as..
+```bash
+first-logstash-process: logstash -f <path_to_logstash_file>
+```
