@@ -14,6 +14,14 @@ indent() {
   sed -u 's/^/       /'
 }
 
+check_logstash_var() {
+  echo "------> Checking for LOGSTASH_VERSION presence"
+  if [ -z "$LOGSTASH_VERSION" ]; then
+    echo "LOGSTASH_VERSION not found, defaulting to highest version" | indent
+    LOGSTASH_VERSION="5.4.0"
+  fi
+}
+
 edit_config_values() {
   edit_port_for_metrics
 }

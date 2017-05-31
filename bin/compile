@@ -14,6 +14,7 @@ LOGSTASH_DIR=$BUILD_DIR/logstash-${LOGSTASH_VERSION}
 LOGSTASH_RELATIVE_PATH=${LOGSTASH_DIR##*/}
 
 echo "------> Detected Logstash Version: $LOGSTASH_VERSION"
+check_logstash_var
 if [[ $LOGSTASH_VERSION =~ ^5 ]]; then
   DOWNLOAD_URL="https://artifacts.elastic.co/downloads/logstash/logstash-$LOGSTASH_VERSION.tar.gz"
 else
@@ -23,7 +24,7 @@ fi
 echo "Installing Logstash..." | indent
 mkdir $CACHE_DIR
 echo "Downloading $DOWNLOAD_URL" | indent
-wget $DOWNLOAD_URL >/dev/null
+wget $DOWNLOAD_URL --quiet
 mv logstash-$LOGSTASH_VERSION.tar.gz $CACHE_DIR
 cp $CACHE_DIR/logstash-$LOGSTASH_VERSION.tar.gz $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz
 tar -xzvf $BUILD_DIR/logstash-$LOGSTASH_VERSION.tar.gz >/dev/null
