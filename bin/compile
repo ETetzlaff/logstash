@@ -13,8 +13,6 @@ LOGSTASH_SOURCE_FILE=${BUILD_DIR}/.profile.d/logstash.sh
 LOGSTASH_DIR=$BUILD_DIR/logstash-${LOGSTASH_VERSION}
 LOGSTASH_RELATIVE_PATH=${LOGSTASH_DIR##*/}
 
-echo "$LOGSTASH_PLUGINS"
-
 echo "------> Detected Logstash Version: $LOGSTASH_VERSION"
 check_logstash_var
 if [[ $LOGSTASH_VERSION =~ ^5 ]]; then
