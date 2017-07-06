@@ -35,3 +35,11 @@ edit_port_for_metrics() {
     echo "Invalid format found" | indent
   fi
 }
+
+install_plugins() {
+  echo "------> Checking and installing declared plugins"
+  if [ $LOGSTASH_PLUGINS ]; then
+    echo "Found plugins, installing.." | indent
+    echo $LOGSTASH_PLUGINS | python -c $'import sys, json\nfor x in json.load(sys.stdin):\n  print x\n\n' | xargs $LOGSTASH_DIR/bin/logstash-plugin install
+  fi
+}
