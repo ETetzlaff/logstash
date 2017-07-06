@@ -39,7 +39,7 @@ edit_port_for_metrics() {
 install_plugins() {
   echo "------> Checking and installing declared plugins"
   echo "Found plugins are.." | indent
-  echo $LOGSTASH_PLUGINS
+  echo "$LOGSTASH_PLUGINS"
   if [ -z "$LOGSTASH_PLUGINS" ]; then
     echo "No Logstash plugins were found"
   else
