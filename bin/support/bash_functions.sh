@@ -39,5 +39,8 @@ edit_port_for_metrics() {
 install_plugins() {
   echo "------> Checking and installing declared plugins"
   echo "Found plugins, installing.." | indent
-  echo $LOGSTASH_PLUGINS | python -c $'import sys, json\nfor x in json.load(sys.stdin):\n  print x\n\n' | xargs $LOGSTASH_DIR/bin/logstash-plugin install
+  echo $LOGSTASH_PLUGINS
+  if [ $LOGSTASH_PLUGINS != "" ]; then
+    echo $LOGSTASH_PLUGINS | python -c $'import sys, json\nfor x in json.load(sys.stdin):\n  print x\n\n' | xargs $LOGSTASH_DIR/bin/logstash-plugin install
+  fi
 }
