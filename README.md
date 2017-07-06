@@ -11,6 +11,11 @@ This buildpack picks up settings through your application's environment variable
 
    will default to 9600-9700
 
+* LOGSTASH_PLUGINS
+
+   not required, specify in the following format `[\"plugin-one\", \"plugin-2\", \"plugin-3\"]`
+   note: the quote escapes are a must, otherwise the function will break
+
 #### Procfile Usage ####
 This buildpack ensures logstash is on the application's PATH, so using it is as simple as..
 ```bash
